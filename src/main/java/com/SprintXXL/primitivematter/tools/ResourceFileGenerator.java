@@ -1,15 +1,20 @@
 package com.SprintXXL.primitivematter.tools;
 
-import com.SprintXXL.primitivematter.library.Matter;
-import com.SprintXXL.primitivematter.library.definitions.ModMatter;
-import com.SprintXXL.primitivematter.library.registry.MatterRegistry;
-import com.SprintXXL.primitivematter.library.shared.FormEntry;
-import com.SprintXXL.primitivematter.library.states.MatterState;
-import com.SprintXXL.primitivematter.library.states.solid.SolidState;
-import com.SprintXXL.primitivematter.library.states.solid.forms.SolidForm;
-import com.SprintXXL.primitivematter.library.states.solid.forms.SolidFormGroup;
-import com.SprintXXL.primitivematter.library.states.solid.forms.basic.BasicForm;
-import com.SprintXXL.primitivematter.library.states.solid.forms.ore.OreForm;
+import com.SprintXXL.primitivematter.library.devices.Device;
+import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
+import com.SprintXXL.primitivematter.library.devices.types.DeviceType;
+import com.SprintXXL.primitivematter.library.substances.Substance;
+import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
+import com.SprintXXL.primitivematter.library.substances.shared.FormEntry;
+import com.SprintXXL.primitivematter.library.substances.states.SubstanceState;
+import com.SprintXXL.primitivematter.library.substances.states.gas.GasState;
+import com.SprintXXL.primitivematter.library.substances.states.liquid.LiquidState;
+import com.SprintXXL.primitivematter.library.substances.states.plasma.PlasmaState;
+import com.SprintXXL.primitivematter.library.substances.states.solid.SolidState;
+import com.SprintXXL.primitivematter.library.substances.states.solid.forms.SolidForm;
+import com.SprintXXL.primitivematter.library.substances.states.solid.forms.SolidFormGroup;
+import com.SprintXXL.primitivematter.library.substances.states.solid.forms.basic.BasicForm;
+import com.SprintXXL.primitivematter.library.substances.states.solid.forms.ore.OreForm;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,137 +22,53 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.SprintXXL.primitivematter.library.states.solid.forms.basic.BasicForm.MATTER_BLOCK;
+import static com.SprintXXL.primitivematter.library.devices.definitions.ModDevices.initModDevices;
+import static com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances.initModSubstances;
 
 public class ResourceFileGenerator {
 
     static void main() {
 
-        ModMatter.initMatterDefinitions();
+        initModSubstances();
+        initModDevices();
 
         cleanGeneratedResources();
 
-        for (Matter matter : MatterRegistry.getAllMatter()) {
+        for (Substance substance : SubstanceRegistry.getAllSubstances()) {
 
-            for (MatterState state : matter.getMatterStates()) {
+            for (SubstanceState state : substance.getSubstanceStates()) {
 
                 if (state instanceof SolidState) {
-                    generateSolidState(matter, (SolidState) state);
+                    generateSolidState(substance, (SolidState) state);
                 }
+
+                if (state instanceof LiquidState) {
+                    generateLiquidState(substance, (LiquidState) state);
+                }
+
+                if (state instanceof GasState) {
+                    generateGasState(substance, (GasState) state);
+                }
+
+                if (state instanceof PlasmaState) {
+                    generatePlasmaState(substance, (PlasmaState) state);
+                }
+            }
+        }
+
+        for (Device device : DeviceRegistry.getAllDevices()) {
+
+            if (device.getType() == DeviceType.BUCKET) {
+                generateDeviceModel(device);
             }
         }
 
         generateLang();
     }
 
-    private static void generateSolidState(Matter matter, SolidState state) {
-
-        for (SolidFormGroup group : state.getFormGroups()) {
-
-            for (FormEntry<? extends SolidForm> entry : group.getForms()) {
-                generateSolidForm(matter, group, entry);
-            }
-        }
-    }
-
-    private static void generateSolidForm(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-
-        SolidForm form = entry.getForm();
-
-        if (!shouldGenerate(entry)) {
-            return;
-        }
-
-        if (isBlockForm(form)) {
-            generateBlockModel(matter, group, entry);
-            generateBlockStateModel(matter, group, entry);
-            generateItemBlockModel(matter, group, entry);
-        }
-        else {
-            generateItemModel(matter, group, entry);
-        }
-    }
-
-    private static void generateBlockModel(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-
-        String registryName = entry.getForm().getName(matter);
-        String texturePath = getTexturePath(matter, group, entry);
-
-        Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/block",
-                registryName + ".json"
-        );
-
-        String json =
-                "{\n" +
-                        "  \"parent\": \"block/cube_all\",\n" +
-                        "  \"textures\": {\n" +
-                        "    \"all\": \"" + texturePath + registryName + "\"\n" +
-                        "  }\n" +
-                        "}";
-
-        writeFile(path, json);
-    }
-
-    private static void generateBlockStateModel(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-
-        String registryName = entry.getForm().getName(matter);
-
-        Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/blockstates",
-                registryName + ".json"
-        );
-
-        String json =
-                "{\n" +
-                        "  \"variants\": {\n" +
-                        "    \"normal\": {\n" +
-                        "      \"model\": \"primitivematter:" + registryName + "\"\n" +
-                        "    }\n" +
-                        "  }\n" +
-                        "}\n";
-
-        writeFile(path, json);
-    }
-
-    private static void generateItemBlockModel(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-
-        String registryName = entry.getForm().getName(matter);
-
-        Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/item",
-                registryName + ".json"
-        );
-
-        String json =
-                "{\n" +
-                        "  \"parent\": \"primitivematter:block/" + registryName + "\"\n" +
-                        "}\n";
-
-        writeFile(path, json);
-    }
-
-    private static void generateItemModel(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-
-        String registryName = entry.getForm().getName(matter);
-        String texturePath = getTexturePath(matter, group, entry);
-
-        Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/item",
-                registryName + ".json"
-        );
-
-        String json =
-                "{\n" +
-                        "  \"parent\": \"item/generated\",\n" +
-                        "  \"textures\": {\n" +
-                        "    \"layer0\": \"" + texturePath + registryName + "\"\n" +
-                        "  }\n" +
-                        "}\n";
-
-        writeFile(path, json);
-    }
-
+    // -------------- \\
+    // LANG GENERATOR \\
+    // -------------- \\
     private static void generateLang() {
 
         Path path = Paths.get(
@@ -157,9 +78,9 @@ public class ResourceFileGenerator {
 
         StringBuilder lang = new StringBuilder();
 
-        for (Matter matter : MatterRegistry.getAllMatter()) {
+        for (Substance substance : SubstanceRegistry.getAllSubstances()) {
 
-            for (MatterState state : matter.getMatterStates()) {
+            for (SubstanceState state : substance.getSubstanceStates()) {
 
                 if (state instanceof SolidState) {
 
@@ -174,7 +95,7 @@ public class ResourceFileGenerator {
                             }
 
                             SolidForm form = entry.getForm();
-                            String registryName = form.getName(matter);
+                            String registryName = form.getName(substance);
 
                             if (isBlockForm(form)) {
                                 lang.append("tile.primitivematter.");
@@ -194,7 +115,240 @@ public class ResourceFileGenerator {
             }
         }
 
+        for (Device device : DeviceRegistry.getAllDevices()) {
+
+            lang.append("item.primitivematter.")
+                    .append(device.getID())
+                    .append(".name=")
+                    .append(toDisplayName(device.getID()))
+                    .append("\n");
+        }
+
         writeFile(path, lang.toString());
+    }
+
+    // --------------- \\
+    // SOLID GENERATOR \\
+    // --------------- \\
+    private static void generateSolidState(Substance substance, SolidState state) {
+
+        for (SolidFormGroup group : state.getFormGroups()) {
+
+            for (FormEntry<? extends SolidForm> entry : group.getForms()) {
+                generateSolidForm(substance, group, entry);
+            }
+        }
+    }
+
+    private static void generateSolidForm(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        SolidForm form = entry.getForm();
+
+        if (!shouldGenerate(entry)) {
+            return;
+        }
+
+        if (isBlockForm(form)) {
+            generateBlockModel(substance, group, entry);
+            generateBlockStateModel(substance, group, entry);
+            generateItemBlockModel(substance, group, entry);
+        }
+        else {
+            generateItemModel(substance, group, entry);
+        }
+    }
+
+    private static void generateBlockModel(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        String registryName = entry.getForm().getName(substance);
+        String texturePath = getTexturePath(substance, group, entry);
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/models/block",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"parent\": \"block/cube_all\",\n" +
+                        "  \"textures\": {\n" +
+                        "    \"all\": \"" + texturePath + registryName + "\"\n" +
+                        "  }\n" +
+                        "}";
+
+        writeFile(path, json);
+    }
+
+    private static void generateBlockStateModel(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        String registryName = entry.getForm().getName(substance);
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/blockstates",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"variants\": {\n" +
+                        "    \"normal\": {\n" +
+                        "      \"model\": \"primitivematter:" + registryName + "\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}\n";
+
+        writeFile(path, json);
+    }
+
+    private static void generateItemBlockModel(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        String registryName = entry.getForm().getName(substance);
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/models/item",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"parent\": \"primitivematter:block/" + registryName + "\"\n" +
+                        "}\n";
+
+        writeFile(path, json);
+    }
+
+    private static void generateItemModel(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        String registryName = entry.getForm().getName(substance);
+        String texturePath = getTexturePath(substance, group, entry);
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/models/item",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"parent\": \"item/generated\",\n" +
+                        "  \"textures\": {\n" +
+                        "    \"layer0\": \"" + texturePath + registryName + "\"\n" +
+                        "  }\n" +
+                        "}\n";
+
+        writeFile(path, json);
+    }
+
+    // SOLID HELPERS \\
+    private static boolean shouldGenerate(FormEntry<? extends SolidForm> entry) {
+        return !entry.hasBackingRegistryName();
+    }
+
+    private static String getTexturePath(Substance substance, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
+
+        if (entry.getForm() == BasicForm.SUBSTANCE_ITEM) {
+            return "primitivematter:handmade/";
+        }
+        else {
+            return "primitivematter:generated/";
+        }
+    }
+
+    private static boolean isBlockForm(SolidForm form) {
+        return form == BasicForm.SUBSTANCE_BLOCK || form == OreForm.ORE_BLOCK;
+    }
+
+    // ---------------- \\
+    // LIQUID GENERATOR \\
+    // ---------------- \\
+    private static void generateLiquidState(Substance substance, LiquidState state) {
+
+        if (state.isVanilla()) {
+            return;
+        }
+
+        generateLiquidBlockState(substance, state);
+    }
+
+    private static void generateLiquidBlockState(Substance substance, LiquidState state) {
+
+        String registryName = state.getRegistryName();
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/blockstates",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"forge_marker\": 1,\n" +
+                        "  \"defaults\": {\n" +
+                        "    \"model\": \"forge:fluid\",\n" +
+                        "    \"custom\": {\n" +
+                        "      \"fluid\": \"" + registryName + "\"\n" +
+                        "    }\n" +
+                        "  },\n" +
+                        "  \"variants\": {\n" +
+                        "    \"level=0\": [{}],\n" +
+                        "    \"level=1\": [{}],\n" +
+                        "    \"level=2\": [{}],\n" +
+                        "    \"level=3\": [{}],\n" +
+                        "    \"level=4\": [{}],\n" +
+                        "    \"level=5\": [{}],\n" +
+                        "    \"level=6\": [{}],\n" +
+                        "    \"level=7\": [{}],\n" +
+                        "    \"level=8\": [{}],\n" +
+                        "    \"level=9\": [{}],\n" +
+                        "    \"level=10\": [{}],\n" +
+                        "    \"level=11\": [{}],\n" +
+                        "    \"level=12\": [{}],\n" +
+                        "    \"level=13\": [{}],\n" +
+                        "    \"level=14\": [{}],\n" +
+                        "    \"level=15\": [{}]\n" +
+                        "  }\n" +
+                        "}\n";
+
+        writeFile(path, json);
+    }
+
+    // ------------- \\
+    // GAS GENERATOR \\
+    // ------------- \\
+    private static void generateGasState(Substance substance, GasState state) {}
+
+    // ---------------- \\
+    // PLASMA GENERATOR \\
+    // ---------------- \\
+    private static void generatePlasmaState(Substance substance, PlasmaState state) {}
+
+    // ---------------- \\
+    // DEVICE GENERATOR \\
+    // ---------------- \\
+    private static void generateDeviceModel(Device device) {
+
+        String registryName = device.getID();
+
+        Path path = Paths.get(
+                "src/main/resources/assets/primitivematter/models/item",
+                registryName + ".json"
+        );
+
+        String json =
+                "{\n" +
+                        "  \"parent\": \"item/handheld\",\n" +
+                        "  \"textures\": {\n" +
+                        "    \"layer0\": \"primitivematter:generated/" + registryName + "\"\n" +
+                        "  }\n" +
+                        "}\n";
+
+        writeFile(path, json);
+    }
+
+    // -------------- \\
+    // GLOBAL HELPERS \\
+    // -------------- \\
+
+    private static String getTextureName(Substance substance, String state, String form) {
+        return state + "_" + substance.getID() + "_" + form;
     }
 
     private static String toDisplayName(String registryName) {
@@ -230,18 +384,6 @@ public class ResourceFileGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static boolean shouldGenerate(FormEntry<? extends SolidForm> entry) {
-        return !entry.hasBackingRegistryName();
-    }
-
-    private static String getTexturePath(Matter matter, SolidFormGroup group, FormEntry<? extends SolidForm> entry) {
-        return "primitivematter:generated/";
-    }
-
-    private static boolean isBlockForm(SolidForm form) {
-        return form == BasicForm.MATTER_BLOCK || form == OreForm.ORE_BLOCK;
     }
 
     private static void cleanGeneratedResources() {

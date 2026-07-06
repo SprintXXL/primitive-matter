@@ -1,0 +1,99 @@
+package com.SprintXXL.primitivematter.content.client;
+
+import com.SprintXXL.primitivematter.content.ContentRegistry;
+import com.SprintXXL.primitivematter.content.base.substances.global.FluidBlockBase;
+import com.SprintXXL.primitivematter.content.client.render.devices.buckets.ModelBucket;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+
+import static com.SprintXXL.primitivematter.Reference.MODID;
+
+@Mod.EventBusSubscriber(Side.CLIENT)
+public class ModelHandler {
+
+    @SubscribeEvent
+    public static void registerModels(ModelRegistryEvent event) {
+
+        for (Item item : ContentRegistry.getCustomItems()) {
+            registerItemModels(item);
+        }
+
+        for (Block block : ContentRegistry.getCustomBlocks()) {
+
+            if (block instanceof FluidBlockBase) {
+                continue;
+            }
+
+            registerBlockModels(block);
+        }
+    }
+
+    private static void registerItemModels(Item item) {
+        ModelLoader.setCustomModelResourceLocation(
+                item,
+                0,
+                new ModelResourceLocation(item.getRegistryName(), "inventory")
+        );
+    }
+
+    private static void registerBlockModels(Block block) {
+        Item item = Item.getItemFromBlock(block);
+
+        ModelLoader.setCustomModelResourceLocation(
+                item,
+                0,
+                new ModelResourceLocation(item.getRegistryName(), "inventory")
+        );
+    }
+
+    @SubscribeEvent
+    public static void stitchFluidTexture(TextureStitchEvent.Pre event) {
+
+        for (Fluid fluid : ContentRegistry.getCustomFluids()) {
+
+            if (fluid.getStill() != null) {
+                event.getMap().registerSprite(fluid.getStill());
+            }
+
+            if (fluid.getFlowing() != null) {
+                event.getMap().registerSprite(fluid.getFlowing());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onTextureStitch(TextureStitchEvent.Pre event) {
+        event.getMap().registerSprite(new ResourceLocation(MODID, "generated/iron_bucket"));
+        event.getMap().registerSprite(new ResourceLocation(MODID, "generated/bucket_overlay_test_liquid"));
+    }
+
+    @SubscribeEvent
+    public static void onModelBake(ModelBakeEvent event) {
+        replaceBucketModel(event, "iron_bucket");
+    }
+
+    private static void replaceBucketModel(ModelBakeEvent event, String modelName) {
+
+        ModelResourceLocation location = new ModelResourceLocation(MODID + ":" + modelName, "inventory");
+
+        IBakedModel model = event.getModelRegistry().getObject(location);
+
+        if (model != null) {
+            event.getModelRegistry().putObject(
+                    location,
+                    new ModelBucket(model, null)
+            );
+        }
+    }
+}
