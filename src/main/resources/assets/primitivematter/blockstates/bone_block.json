@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "primitivematter:bone_block"
+      "model": "primitivematter:generated/bone_block"
     }
   }
 }

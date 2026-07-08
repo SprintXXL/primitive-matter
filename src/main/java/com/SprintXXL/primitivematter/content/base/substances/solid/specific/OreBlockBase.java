@@ -1,5 +1,7 @@
 package com.SprintXXL.primitivematter.content.base.substances.solid.specific;
 
+import com.SprintXXL.primitivematter.content.base.ResourceMode;
+import com.SprintXXL.primitivematter.content.base.ResourceModeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -10,7 +12,7 @@ import java.util.Random;
 
 import static com.SprintXXL.primitivematter.Reference.MODID;
 
-public class OreBlockBase extends Block {
+public class OreBlockBase extends Block implements ResourceModeProvider {
 
     private final Item drop;
 
@@ -26,6 +28,11 @@ public class OreBlockBase extends Block {
         setHardness(3.0F);
         setResistance(5.0F);
         setHarvestLevel("pickaxe", harvestLevel);
+    }
+
+    @Override
+    public ResourceMode getResourceMode() {
+        return ResourceMode.GENERATED;
     }
 
     @Override

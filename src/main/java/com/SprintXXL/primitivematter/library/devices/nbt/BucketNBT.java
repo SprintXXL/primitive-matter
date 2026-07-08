@@ -12,6 +12,7 @@ public final class BucketNBT {
 
     private static final String LIQUID = "Liquid";
     private static final String AMOUNT = "Amount";
+    private static final String EMPTY = "empty";
 
     public static void setLiquid(ItemStack stack, String liquid) {
         setString(stack, COMPOUND, LIQUID, liquid);
@@ -45,11 +46,11 @@ public final class BucketNBT {
     }
 
     public static void clearContent(ItemStack stack) {
-        setLiquid(stack, UNKNOWN);
+        setLiquid(stack, EMPTY);
         setAmount(stack, 0);
     }
 
     public static boolean isEmpty(ItemStack stack) {
-        return getAmount(stack) <= 0 || getLiquid(stack).equals(UNKNOWN);
+        return getAmount(stack) <= 0 || getLiquid(stack).equals(EMPTY);
     }
 }

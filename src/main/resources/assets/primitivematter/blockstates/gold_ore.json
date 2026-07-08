@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "primitivematter:gold_ore"
+      "model": "primitivematter:generated/gold_ore"
     }
   }
 }

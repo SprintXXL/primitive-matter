@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "primitivematter:cinnabar_ore"
+      "model": "primitivematter:generated/cinnabar_ore"
     }
   }
 }

@@ -3,6 +3,7 @@ package com.SprintXXL.primitivematter.library.substances.definitions;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.shared.Category;
 import com.SprintXXL.primitivematter.library.substances.shared.ColorRule;
+import com.SprintXXL.primitivematter.library.substances.states.StateProperties;
 import com.SprintXXL.primitivematter.library.substances.states.gas.GasState;
 import com.SprintXXL.primitivematter.library.substances.states.liquid.LiquidState;
 import com.SprintXXL.primitivematter.library.substances.states.plasma.PlasmaState;
@@ -21,6 +22,9 @@ public final class ModSubstances {
 
     private ModSubstances() {}
 
+    private static final int NEGATIVE_INFINITY = Integer.MIN_VALUE;
+    private static final int POSITIVE_INFINITY = Integer.MAX_VALUE;
+
     public static void initModSubstances() {
 
         register(TEST_MATTER);
@@ -31,6 +35,7 @@ public final class ModSubstances {
         register(TIN);
         register(GOLD);
         register(BRONZE);
+        register(STEEL);
 
         // MINERAL MATTER \\
         register(REDSTONE);
@@ -51,6 +56,7 @@ public final class ModSubstances {
         register(OBSIDIAN);
         register(WATER);
         register(LAVA);
+        register(CLAY);
 
         // ORGANIC MATTER \\
         register(BONE);
@@ -65,18 +71,40 @@ public final class ModSubstances {
                     SubstanceIDs.TEST_MATTER,
                     "#805a00",
                     Category.CHEMICAL,
-                    new LiquidState("test_liquid"),
-                    new GasState("test_gas"),
-                    new PlasmaState("test_plasma")
+                    new LiquidState(
+                            new StateProperties(
+                                    NEGATIVE_INFINITY,
+                                    999
+                            ),
+                            "test_liquid"
+                    ),
+                    new GasState(
+                            new StateProperties(
+                                    1000,
+                                    1999
+                            ),
+                            "test_gas"
+                    ),
+                    new PlasmaState(
+                            new StateProperties(
+                                    2000,
+                                    POSITIVE_INFINITY
+                            ),
+                            "test_plasma"
+                    )
             );
 
     // METAL MATTER \\
     public static final Substance IRON =
             new Substance(
                     SubstanceIDs.IRON,
-                    "#D8D8D8",
+                    "#808080",
                     Category.METAL,
                     new SolidState(
+                            new StateProperties(
+                                    NEGATIVE_INFINITY,
+                                    1499
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "iron_block"),
                                     vanilla(INGOT, "iron_ingot"),
@@ -87,14 +115,25 @@ public final class ModSubstances {
                                     ALL
                             ),
                             new OreVariant()
+                    ),
+                    new LiquidState(
+                            new StateProperties(
+                                    1500,
+                                    POSITIVE_INFINITY
+                            ),
+                            "molten_iron"
                     )
             );
     public static final Substance COPPER =
             new Substance(
                     SubstanceIDs.COPPER,
-                    "#E6834D",
+                    "#80482a",
                     Category.METAL,
                     new SolidState(
+                            new StateProperties(
+                                    -1,
+                                    999
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     INGOT,
@@ -107,9 +146,13 @@ public final class ModSubstances {
     public static final Substance TIN =
             new Substance(
                     SubstanceIDs.TIN,
-                    "#8B9294",
+                    "#787e80",
                     Category.METAL,
                     new SolidState(
+                            new StateProperties(
+                                    -1,
+                                    999
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     INGOT,
@@ -122,9 +165,13 @@ public final class ModSubstances {
     public static final Substance GOLD =
             new Substance(
                     SubstanceIDs.GOLD,
-                    "#FFF144",
+                    "#807a22",
                     Category.METAL,
                     new SolidState(
+                            new StateProperties(
+                                    -1,
+                                    999
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "gold_block"),
                                     vanilla(INGOT, "gold_ingot"),
@@ -140,9 +187,34 @@ public final class ModSubstances {
     public static final Substance BRONZE =
             new Substance(
                     SubstanceIDs.BRONZE,
-                    "#D48648",
+                    "#80512b",
                     Category.METAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            new BasicForms(
+                                    SUBSTANCE_BLOCK,
+                                    INGOT,
+                                    NUGGET,
+                                    DUST
+                            ),
+                            new IndustrialForms(
+                                    ALL
+                            )
+                    )
+            );
+    public static final Substance STEEL =
+            new Substance(
+                    SubstanceIDs.STEEL,
+                    "#807a7a",
+                    Category.METAL,
+                    new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     INGOT,
@@ -159,9 +231,13 @@ public final class ModSubstances {
     public static final Substance REDSTONE =
             new Substance(
                     SubstanceIDs.REDSTONE,
-                    "#720000",
+                    "#800000",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "redstone_block"),
                                     vanilla(DUST, "redstone")
@@ -172,9 +248,13 @@ public final class ModSubstances {
     public static final Substance DIAMOND =
             new Substance(
                     SubstanceIDs.DIAMOND,
-                    "#68D0D6",
+                    "#3e7c80",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "diamond_block"),
                                     vanilla(SUBSTANCE_ITEM, "diamond"),
@@ -186,9 +266,13 @@ public final class ModSubstances {
     public static final Substance COAL =
             new Substance(
                     SubstanceIDs.COAL,
-                    "#0C0E12",
+                    "#808080",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "coal_block"),
                                     vanilla(SUBSTANCE_ITEM, "coal"),
@@ -200,9 +284,13 @@ public final class ModSubstances {
     public static final Substance LIGNITE_COAL =
             new Substance(
                     SubstanceIDs.LIGNITE_COAL,
-                    "#1E100C",
+                    "#804433",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     SUBSTANCE_ITEM,
@@ -214,9 +302,13 @@ public final class ModSubstances {
     public static final Substance CINNABAR =
             new Substance(
                     SubstanceIDs.CINNABAR,
-                    "#9E2A16",
+                    "#802312",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     SUBSTANCE_ITEM,
@@ -228,9 +320,13 @@ public final class ModSubstances {
     public static final Substance FLINT =
             new Substance(
                     SubstanceIDs.FLINT,
-                    "#626A73",
+                    "#6c7580",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_ITEM, "flint"),
                                     DUST
@@ -240,9 +336,13 @@ public final class ModSubstances {
     public static final Substance CASSITERITE =
             new Substance(
                     SubstanceIDs.CASSITERITE,
-                    "#65584D",
+                    "#806f61",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     DUST
                             ),
@@ -252,9 +352,13 @@ public final class ModSubstances {
     public static final Substance CHALCOPYRITE =
             new Substance(
                     SubstanceIDs.CHALCOPYRITE,
-                    "#C77A2C",
+                    "#804e1c",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     DUST
                             ),
@@ -264,9 +368,13 @@ public final class ModSubstances {
     public static final Substance MAGNETITE =
             new Substance(
                     SubstanceIDs.MAGNETITE,
-                    "#2D394C",
+                    "#2d394c",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     DUST
                             ),
@@ -276,9 +384,13 @@ public final class ModSubstances {
     public static final Substance PYRITE =
             new Substance(
                     SubstanceIDs.PYRITE,
-                    "#BE9637",
+                    "#806525",
                     Category.MINERAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     DUST
                             ),
@@ -290,9 +402,13 @@ public final class ModSubstances {
     public static final Substance STONE =
             new Substance(
                     SubstanceIDs.STONE,
-                    "#7D7D7D",
+                    "#808080",
                     Category.GEOLOGICAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "stone"),
                                     DUST
@@ -302,9 +418,13 @@ public final class ModSubstances {
     public static final Substance SAND =
             new Substance(
                     SubstanceIDs.SAND,
-                    "#C2B280",
+                    "#807554",
                     Category.GEOLOGICAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "sand"),
                                     DUST
@@ -314,9 +434,13 @@ public final class ModSubstances {
     public static final Substance GRAVEL =
             new Substance(
                     SubstanceIDs.GRAVEL,
-                    "#847F7F",
+                    "#807a7a",
                     Category.GEOLOGICAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "gravel"),
                                     DUST
@@ -326,9 +450,13 @@ public final class ModSubstances {
     public static final Substance OBSIDIAN =
             new Substance(
                     SubstanceIDs.OBSIDIAN,
-                    "#282038",
+                    "#5b4980",
                     Category.GEOLOGICAL,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     vanilla(SUBSTANCE_BLOCK, "obsidian"),
                                     DUST
@@ -338,26 +466,64 @@ public final class ModSubstances {
     public static final Substance WATER =
             new Substance(
                     SubstanceIDs.WATER,
-                    "#858585",
+                    "#7c7e80",
                     Category.GEOLOGICAL,
-                    new LiquidState("water").vanilla(),
-                    new GasState("steam")
+                    new LiquidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            "water"
+                    ).vanilla(),
+                    new GasState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            "steam"
+                    )
             );
     public static final Substance LAVA =
             new Substance(
                     SubstanceIDs.LAVA,
                     null,
                     Category.GEOLOGICAL,
-                    new LiquidState("lava").vanilla()
+                    new LiquidState(
+                            new StateProperties(
+                                    1000,
+                                    3000
+                            ),
+                            "lava"
+                    ).vanilla()
+            );
+    public static final Substance CLAY =
+            new Substance(
+                    SubstanceIDs.CLAY,
+                    "#606c80",
+                    Category.GEOLOGICAL,
+                    new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            new BasicForms(
+                                    vanilla(SUBSTANCE_BLOCK, "clay_block"),
+                                    vanilla(SUBSTANCE_ITEM, "clay")
+                            )
+                    )
             );
 
     // ORGANIC MATTER \\
     public static final Substance BONE =
             new Substance(
                     SubstanceIDs.BONE,
-                    "#E4E2D2",
+                    "#807e75",
                     Category.ORGANIC,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new BasicForms(
                                     SUBSTANCE_BLOCK,
                                     vanilla(SUBSTANCE_ITEM, "bone"),
@@ -368,9 +534,13 @@ public final class ModSubstances {
     public static final Substance WOOD =
             new Substance(
                     SubstanceIDs.WOOD,
-                    "#785634",
+                    "#805b37",
                     Category.ORGANIC,
                     new SolidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
                             new IndustrialForms(
                                     vanilla(ROD, "stick")
                             )
@@ -383,7 +553,19 @@ public final class ModSubstances {
                     SubstanceIDs.OXYGEN,
                     "#5d7580",
                     Category.CHEMICAL,
-                    new LiquidState("liquid_oxygen"),
-                    new GasState("oxygen")
+                    new LiquidState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            "liquid_oxygen"
+                    ),
+                    new GasState(
+                            new StateProperties(
+                                    0,
+                                    0
+                            ),
+                            "oxygen"
+                    )
             );
 }

@@ -1,13 +1,16 @@
 package com.SprintXXL.primitivematter.content.base.devices;
 
+import com.SprintXXL.primitivematter.content.base.ResourceMode;
+import com.SprintXXL.primitivematter.content.base.ResourceModeProvider;
 import com.SprintXXL.primitivematter.content.base.substances.global.FluidBlockBase;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.nbt.BucketNBT;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.types.BucketData;
+import com.SprintXXL.primitivematter.library.devices.types.bucket.BucketDevice;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,11 +25,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
-import static com.SprintXXL.primitivematter.PrimitiveMatter.printInfo;
+import java.util.List;
+
 import static com.SprintXXL.primitivematter.Reference.MODID;
 import static com.SprintXXL.primitivematter.library.devices.nbt.NBTHelper.UNKNOWN;
 
-public class DeviceBucketBase extends ItemBucket {
+public class DeviceBucketBase extends ItemBucket implements ResourceModeProvider {
+
+    private static final int LITER = 1000;
 
     public DeviceBucketBase(String name) {
         super(Blocks.AIR);
@@ -37,7 +43,33 @@ public class DeviceBucketBase extends ItemBucket {
         setMaxStackSize(1);
     }
 
-    private static final int LITER = 1000;
+    @Override
+    public ResourceMode getResourceMode() {
+        return ResourceMode.GENERATED;
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+
+        String liquid = BucketNBT.getLiquid(stack);
+
+        tooltip.add("Contains: " + toDisplayName(liquid));
+    }
+
+    private static String toDisplayName(String id) {
+
+        String[] words = id.split("_");
+
+        StringBuilder builder = new StringBuilder();
+
+        for (String word : words) {
+
+            builder.append(Character.toUpperCase(word.charAt(0)));
+            builder.append(word.substring(1));
+        }
+
+        return builder.toString();
+    }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
@@ -83,8 +115,13 @@ public class DeviceBucketBase extends ItemBucket {
         }
 
         world.setBlockState(placePos, liquidBlock.getDefaultState());
-        BucketNBT.removeAmount(stack, LITER);
 
+        if (isTooHotForBucket(stack, liquid)) {
+            stack.shrink(1);
+            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        }
+
+        BucketNBT.removeAmount(stack, LITER);
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }
 
@@ -113,7 +150,9 @@ public class DeviceBucketBase extends ItemBucket {
             return new ActionResult<>(EnumActionResult.FAIL, stack);
         }
 
-        if (BucketNBT.getAmount(stack) + LITER > device.getCapacity()) {
+        BucketDevice bucket = (BucketDevice) device;
+
+        if (BucketNBT.getAmount(stack) + LITER > bucket.getCapacity()) {
             return new ActionResult<>(EnumActionResult.FAIL, stack);
         }
 
@@ -122,9 +161,36 @@ public class DeviceBucketBase extends ItemBucket {
 
         world.setBlockToAir(pos);
 
-        printInfo("Filled bucket with: " + liquid);
-
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+    }
+
+    private static boolean isTooHotForBucket(ItemStack stack, String liquid) {
+
+        Substance substance = SubstanceRegistry.getSubstanceFromLiquid(liquid);
+        Device device = DeviceRegistry.getDeviceFromStack(stack);
+
+        if (substance == null || device == null) {
+            return false;
+        }
+
+        if (!substance.hasLiquidState()) {
+            return false;
+        }
+
+        if (!(stack.getItem() instanceof DeviceBucketBase)) {
+            return false;
+        }
+
+        BucketDevice bucket = (BucketDevice) device;
+
+        int liquidTemp = substance.getLiquidState().getProperties().getMinTemperature();
+        int bucketMaxTemp = bucket.getMaxTemperature();
+
+        if (liquidTemp > bucketMaxTemp) {
+            return true;
+        }
+
+        return false;
     }
 
     private static boolean isValidLiquid(Block block) {
@@ -143,11 +209,11 @@ public class DeviceBucketBase extends ItemBucket {
     private static String getLiquidID(Block block) {
 
         if (block == Blocks.WATER) {
-            return "water";
+            return FluidRegistry.WATER.getName();
         }
 
         if (block == Blocks.LAVA) {
-            return "lava";
+            return FluidRegistry.LAVA.getName();
         }
 
         if (block instanceof FluidBlockBase) {

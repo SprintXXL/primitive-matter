@@ -2,7 +2,7 @@ package com.SprintXXL.primitivematter.tools;
 
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceType;
+import com.SprintXXL.primitivematter.library.devices.types.DeviceCategory;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import com.SprintXXL.primitivematter.library.substances.shared.FormEntry;
@@ -58,7 +58,7 @@ public class ResourceFileGenerator {
 
         for (Device device : DeviceRegistry.getAllDevices()) {
 
-            if (device.getType() == DeviceType.BUCKET) {
+            if (device.getCategory() == DeviceCategory.BUCKET) {
                 generateDeviceModel(device);
             }
         }
@@ -117,8 +117,13 @@ public class ResourceFileGenerator {
 
         for (Device device : DeviceRegistry.getAllDevices()) {
 
-            lang.append("item.primitivematter.")
-                    .append(device.getID())
+            if (device.createsBlock()) {
+                lang.append("tile.primitivematter.");
+            } else {
+                lang.append("item.primitivematter.");
+            }
+
+            lang.append(device.getID())
                     .append(".name=")
                     .append(toDisplayName(device.getID()))
                     .append("\n");
@@ -164,7 +169,7 @@ public class ResourceFileGenerator {
         String texturePath = getTexturePath(substance, group, entry);
 
         Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/block",
+                "src/main/resources/assets/primitivematter/models/block/generated",
                 registryName + ".json"
         );
 
@@ -192,7 +197,7 @@ public class ResourceFileGenerator {
                 "{\n" +
                         "  \"variants\": {\n" +
                         "    \"normal\": {\n" +
-                        "      \"model\": \"primitivematter:" + registryName + "\"\n" +
+                        "      \"model\": \"primitivematter:generated/" + registryName + "\"\n" +
                         "    }\n" +
                         "  }\n" +
                         "}\n";
@@ -205,13 +210,13 @@ public class ResourceFileGenerator {
         String registryName = entry.getForm().getName(substance);
 
         Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/item",
+                "src/main/resources/assets/primitivematter/models/item/generated",
                 registryName + ".json"
         );
 
         String json =
                 "{\n" +
-                        "  \"parent\": \"primitivematter:block/" + registryName + "\"\n" +
+                        "  \"parent\": \"primitivematter:block/generated/" + registryName + "\"\n" +
                         "}\n";
 
         writeFile(path, json);
@@ -223,7 +228,7 @@ public class ResourceFileGenerator {
         String texturePath = getTexturePath(substance, group, entry);
 
         Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/item",
+                "src/main/resources/assets/primitivematter/models/item/generated",
                 registryName + ".json"
         );
 
@@ -328,13 +333,13 @@ public class ResourceFileGenerator {
         String registryName = device.getID();
 
         Path path = Paths.get(
-                "src/main/resources/assets/primitivematter/models/item",
+                "src/main/resources/assets/primitivematter/models/item/generated",
                 registryName + ".json"
         );
 
         String json =
                 "{\n" +
-                        "  \"parent\": \"item/handheld\",\n" +
+                        "  \"parent\": \"item/generated\",\n" +
                         "  \"textures\": {\n" +
                         "    \"layer0\": \"primitivematter:generated/" + registryName + "\"\n" +
                         "  }\n" +
@@ -388,9 +393,8 @@ public class ResourceFileGenerator {
 
     private static void cleanGeneratedResources() {
 
-        deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/models/item"));
-        deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/models/block"));
-        deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/blockstates"));
+        deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/models/item/generated"));
+        deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/models/block/generated"));
         deleteDirectoryContents(Paths.get("src/main/resources/assets/primitivematter/lang"));
     }
 

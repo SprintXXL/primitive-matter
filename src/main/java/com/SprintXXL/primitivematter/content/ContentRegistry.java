@@ -8,9 +8,11 @@ import com.SprintXXL.primitivematter.content.base.substances.plasma.PlasmaBase;
 import com.SprintXXL.primitivematter.content.base.substances.solid.BlockBase;
 import com.SprintXXL.primitivematter.content.base.substances.solid.ItemBase;
 import com.SprintXXL.primitivematter.content.base.substances.solid.specific.OreBlockBase;
+import com.SprintXXL.primitivematter.content.base.devices.DevicePipeBase;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceType;
+import com.SprintXXL.primitivematter.library.devices.types.DeviceCategory;
+import com.SprintXXL.primitivematter.library.devices.types.pipe.PipeDevice;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import com.SprintXXL.primitivematter.library.substances.shared.FormEntry;
@@ -143,8 +145,12 @@ public final class ContentRegistry {
 
         for (Device device : DeviceRegistry.getAllDevices()) {
 
-            if (device.getType() == DeviceType.BUCKET) {
+            if (device.getCategory() == DeviceCategory.BUCKET) {
                 createBucketContent(device);
+            }
+
+            if (device.getCategory() == DeviceCategory.PIPE) {
+                createPipeContent(device);
             }
         }
     }
@@ -372,5 +378,20 @@ public final class ContentRegistry {
 
         ITEMS.put(item.getRegistryName(), item);
         CUSTOM_ITEMS.put(item.getRegistryName(), item);
+    }
+
+    // Pipe \\
+    private static void createPipeContent(Device device) {
+
+        if (!(device instanceof PipeDevice)) {
+            throw new IllegalStateException("Pipe device is not PipeDevice: " + device.getID());
+        }
+
+        PipeDevice pipe = (PipeDevice) device;
+
+        Block block = new DevicePipeBase(pipe);
+
+        BLOCKS.put(block.getRegistryName(), block);
+        CUSTOM_BLOCKS.put(block.getRegistryName(), block);
     }
 }

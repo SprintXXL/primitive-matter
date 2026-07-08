@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "primitivematter:bronze_block"
+      "model": "primitivematter:generated/bronze_block"
     }
   }
 }

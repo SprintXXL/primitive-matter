@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "normal": {
+      "model": "primitivematter:handmade/basic_item_pipe"
+    }
+  }
+}

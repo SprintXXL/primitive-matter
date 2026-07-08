@@ -1,12 +1,14 @@
 package com.SprintXXL.primitivematter.content.base.substances.solid;
 
+import com.SprintXXL.primitivematter.content.base.ResourceMode;
+import com.SprintXXL.primitivematter.content.base.ResourceModeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 
 import static com.SprintXXL.primitivematter.Reference.MODID;
 
-public class BlockBase extends Block {
+public class BlockBase extends Block implements ResourceModeProvider {
 
     public BlockBase(String name) {
         super(Material.ANVIL);
@@ -14,5 +16,10 @@ public class BlockBase extends Block {
         setRegistryName(MODID, name);
         setTranslationKey(MODID + "." + name);
         setCreativeTab(CreativeTabs.MISC);
+    }
+
+    @Override
+    public ResourceMode getResourceMode() {
+        return ResourceMode.GENERATED;
     }
 }

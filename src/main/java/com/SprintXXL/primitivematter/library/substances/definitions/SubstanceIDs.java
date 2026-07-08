@@ -12,6 +12,7 @@ public final class SubstanceIDs {
     public static final String TIN = "tin";
     public static final String GOLD = "gold";
     public static final String BRONZE = "bronze";
+    public static final String STEEL = "steel";
 
     // Mineral Substance \\
     public static final String REDSTONE = "redstone";
@@ -32,6 +33,7 @@ public final class SubstanceIDs {
     public static final String OBSIDIAN = "obsidian";
     public static final String WATER = "water";
     public static final String LAVA = "lava";
+    public static final String CLAY = "clay";
 
     // Organic Substance \\
     public static final String BONE = "bone";

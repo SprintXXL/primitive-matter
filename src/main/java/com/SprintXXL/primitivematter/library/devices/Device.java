@@ -1,43 +1,35 @@
 package com.SprintXXL.primitivematter.library.devices;
 
-import com.SprintXXL.primitivematter.library.devices.types.BucketData;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceType;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceData;
+import com.SprintXXL.primitivematter.library.devices.types.DeviceCategory;
 
-public class Device {
+public abstract class Device implements DeviceDefinition {
 
     private final String id;
-    private final DeviceType type;
-    private final DeviceData data;
+    private final DeviceCategory category;
 
     public Device(
             String id,
-            DeviceType type,
-            DeviceData data
+            DeviceCategory category
     ) {
         this.id = id;
-        this.type = type;
-        this.data = data;
+        this.category = category;
     }
 
+    @Override
     public String getID() {
         return id;
     }
 
-    public DeviceType getType() {
-        return type;
+    @Override
+    public DeviceCategory getCategory() {
+        return category;
     }
 
-    public DeviceData getData() {
-        return data;
+    public boolean createsBlock() {
+        return false;
     }
 
-    public int getCapacity() {
-
-        if (data instanceof BucketData) {
-            return ((BucketData) data).getCapacity();
-        }
-
-        return 0;
+    public boolean createsItem() {
+        return false;
     }
 }

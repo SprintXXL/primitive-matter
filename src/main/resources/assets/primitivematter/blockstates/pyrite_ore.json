@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "primitivematter:pyrite_ore"
+      "model": "primitivematter:generated/pyrite_ore"
     }
   }
 }
