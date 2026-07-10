@@ -1,0 +1,23 @@
+{
+  "textures": {
+    "0": "primitivematter:handmade/basic_item_pipe_center",
+    "1": "primitivematter:handmade/basic_item_pipe_connector",
+    "2": "primitivematter:handmade/basic_item_pipe_pull",
+    "3": "primitivematter:handmade/basic_item_pipe_blank"
+  },
+  "elements": [
+    {
+      "from":[0, 4, 4],
+      "to": [4, 12, 12],
+
+      "faces": {
+        "up": {"texture": "#1", "uv": [6, 4, 10, 12]},
+        "down": {"texture": "#1", "uv": [6, 4, 10, 12]},
+        "north": {"texture": "#1", "uv": [6, 4, 10, 12]},
+        "south": {"texture": "#1", "uv": [6, 4, 10, 12]},
+        "east": {"texture": "#1", "uv": [6, 4, 10, 12]},
+        "west": {"texture": "#3"}
+      }
+    }
+  ]
+}

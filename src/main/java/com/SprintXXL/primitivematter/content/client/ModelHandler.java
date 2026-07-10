@@ -1,9 +1,9 @@
 package com.SprintXXL.primitivematter.content.client;
 
-import com.SprintXXL.primitivematter.content.ContentRegistry;
-import com.SprintXXL.primitivematter.content.base.ResourceMode;
-import com.SprintXXL.primitivematter.content.base.ResourceModeProvider;
-import com.SprintXXL.primitivematter.content.base.substances.global.FluidBlockBase;
+import com.SprintXXL.primitivematter.content.registry.ContentRegistry;
+import com.SprintXXL.primitivematter.content.ResourceMode;
+import com.SprintXXL.primitivematter.content.ResourceModeProvider;
+import com.SprintXXL.primitivematter.content.substances.global.FluidBlockBase;
 import com.SprintXXL.primitivematter.content.client.render.devices.buckets.ModelBucket;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;

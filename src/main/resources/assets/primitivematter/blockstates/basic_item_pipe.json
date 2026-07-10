@@ -1,7 +1,129 @@
 {
-  "variants": {
-    "normal": {
-      "model": "primitivematter:handmade/basic_item_pipe"
+  "multipart": [
+
+    {
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_center"
+      }
+    },
+    {
+      "when": {"up": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_up"
+      }
+    },
+    {
+      "when": {"down": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_down"
+      }
+    },
+    {
+      "when": {"north": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_north"
+      }
+    },
+    {
+      "when": {"south": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_south"
+      }
+    },
+    {
+      "when": {"east": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_east"
+      }
+    },
+    {
+      "when": {"west": "connected"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_west"
+      }
+    },
+    {
+      "when": {"up": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_up"
+      }
+    },
+    {
+      "when": {"down": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_down"
+      }
+    },
+    {
+      "when": {"north": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_north"
+      }
+    },
+    {
+      "when": {"south": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_south"
+      }
+    },
+    {
+      "when": {"east": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_east"
+      }
+    },
+    {
+      "when": {"west": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_west"
+      }
+    },
+    {
+      "when": {"up": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {"down": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "x": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {"north": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {"south": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {"east": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {"west": "pull"},
+      "apply": {
+        "model": "primitivematter:handmade/basic_item_pipe_pull",
+        "y": 270,
+        "uvlock": true
+      }
     }
-  }
+  ]
 }
