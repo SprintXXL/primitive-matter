@@ -1,7 +1,7 @@
 package com.SprintXXL.primitivematter.content.substances.solid;
 
-import com.SprintXXL.primitivematter.content.ResourceMode;
-import com.SprintXXL.primitivematter.content.ResourceModeProvider;
+import com.SprintXXL.primitivematter.content.client.ResourceMode;
+import com.SprintXXL.primitivematter.content.client.ResourceModeProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 

@@ -148,7 +148,7 @@ idea {
                 afterEvaluate {
                     javacAdditionalOptions = '-encoding utf8'
                     moduleJavacAdditionalOptions = [
-                            (project.name + '.main'): tasks.compileJava.options.compilerArgs.collect { "\"${it}\"" }.join(' ')
+                            (project.name + '.base'): tasks.compileJava.options.compilerArgs.collect { "\"${it}\"" }.join(' ')
                     ]
                 }
             }

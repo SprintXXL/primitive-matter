@@ -35,7 +35,7 @@ dependencies {
     // 'maven.modrinth:jei:4.16.1.1000' << jei = project name, 4.16.1.1000 = file version
     // Full documentation: https://docs.modrinth.com/docs/tutorials/maven/
 
-    // Common dependency types (configuration):
+    // Common dependency transport (configuration):
     // implementation = dependency available at both compile time and runtime
     // runtimeOnly = runtime dependency
     // compileOnly = compile time dependency

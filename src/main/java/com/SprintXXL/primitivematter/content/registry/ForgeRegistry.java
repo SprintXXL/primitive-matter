@@ -1,8 +1,8 @@
 package com.SprintXXL.primitivematter.content.registry;
 
 import com.SprintXXL.primitivematter.PrimitiveMatter;
-import com.SprintXXL.primitivematter.content.devices.pipe.BlockPipe;
-import com.SprintXXL.primitivematter.content.devices.pipe.ItemPipe;
+import com.SprintXXL.primitivematter.content.devices.transport.pipe.base.BlockPipe;
+import com.SprintXXL.primitivematter.content.devices.transport.pipe.base.ItemPipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

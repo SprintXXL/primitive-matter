@@ -1,7 +1,7 @@
 package com.SprintXXL.primitivematter.content.registry;
 
-import com.SprintXXL.primitivematter.content.devices.bucket.ItemBucket;
-import com.SprintXXL.primitivematter.content.devices.pipe.BlockPipe;
+import com.SprintXXL.primitivematter.content.devices.transport.bucket.ItemBucket;
+import com.SprintXXL.primitivematter.content.devices.transport.pipe.base.BlockPipe;
 import com.SprintXXL.primitivematter.content.substances.gas.GasBase;
 import com.SprintXXL.primitivematter.content.substances.global.FluidBlockBase;
 import com.SprintXXL.primitivematter.content.substances.liquid.LiquidBase;
@@ -11,8 +11,8 @@ import com.SprintXXL.primitivematter.content.substances.solid.ItemBase;
 import com.SprintXXL.primitivematter.content.substances.solid.specific.OreBlockBase;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceCategory;
-import com.SprintXXL.primitivematter.library.devices.types.pipe.PipeDevice;
+import com.SprintXXL.primitivematter.library.devices.transport.bucket.BucketDevice;
+import com.SprintXXL.primitivematter.library.devices.transport.pipe.PipeDevice;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import com.SprintXXL.primitivematter.library.substances.shared.FormEntry;
@@ -145,11 +145,11 @@ public final class ContentRegistry {
 
         for (Device device : DeviceRegistry.getAllDevices()) {
 
-            if (device.getCategory() == DeviceCategory.BUCKET) {
+            if (device instanceof BucketDevice) {
                 createBucketContent(device);
             }
 
-            if (device.getCategory() == DeviceCategory.PIPE) {
+            if (device instanceof PipeDevice) {
                 createPipeContent(device);
             }
         }

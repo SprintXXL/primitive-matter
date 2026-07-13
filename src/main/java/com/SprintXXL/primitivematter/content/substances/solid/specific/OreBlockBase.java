@@ -1,7 +1,7 @@
 package com.SprintXXL.primitivematter.content.substances.solid.specific;
 
-import com.SprintXXL.primitivematter.content.ResourceMode;
-import com.SprintXXL.primitivematter.content.ResourceModeProvider;
+import com.SprintXXL.primitivematter.content.client.ResourceMode;
+import com.SprintXXL.primitivematter.content.client.ResourceModeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

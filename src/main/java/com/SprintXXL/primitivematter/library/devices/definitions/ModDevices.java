@@ -1,9 +1,9 @@
 package com.SprintXXL.primitivematter.library.devices.definitions;
 
-import com.SprintXXL.primitivematter.library.devices.types.bucket.BucketDevice;
-import com.SprintXXL.primitivematter.library.devices.types.pipe.PipeDevice;
-import com.SprintXXL.primitivematter.library.devices.types.pipe.PipeType;
-import com.SprintXXL.primitivematter.library.devices.types.pipe.data.ItemData;
+import com.SprintXXL.primitivematter.library.devices.transport.bucket.BucketDevice;
+import com.SprintXXL.primitivematter.library.devices.transport.pipe.PipeDevice;
+import com.SprintXXL.primitivematter.library.devices.transport.pipe.PipeType;
+import com.SprintXXL.primitivematter.library.devices.transport.pipe.data.ItemPipeData;
 import com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances;
 
 import static com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry.register;
@@ -14,23 +14,31 @@ public final class ModDevices {
 
     public static void initModDevices() {
 
-        // -------------- \\
-        // BUCKET DEVICES \\
-        // -------------- \\
+        // --------------- \\
+        // STORAGE DEVICES \\
+        // --------------- \\
+
+        // ----------------- \\
+        // TRANSPORT DEVICES \\
+        // ----------------- \\
+        // BUCKET \\
         register(CLAY_BUCKET);
         register(IRON_BUCKET);
         register(STEEL_BUCKET);
 
-        // ------------ \\
-        // PIPE DEVICES \\
-        // ------------ \\
+        // PIPE \\
         register(BASIC_ITEM_PIPE);
 
     }
 
-    // -------------- \\
-    // BUCKET DEVICES \\
-    // -------------- \\
+    // --------------- \\
+    // STORAGE DEVICES \\
+    // --------------- \\
+
+    // ----------------- \\
+    // TRANSPORT DEVICES \\
+    // ----------------- \\
+    // BUCKET \\
     public static final BucketDevice CLAY_BUCKET =
             new BucketDevice(
                     DeviceIDs.CLAY_BUCKET,
@@ -50,16 +58,15 @@ public final class ModDevices {
                     1000
             );
 
-    // ------------ \\
-    // PIPE DEVICES \\
-    // ------------ \\
+    // PIPE \\
     public static final PipeDevice BASIC_ITEM_PIPE =
             new PipeDevice(
                     DeviceIDs.BASIC_ITEM_PIPE,
                     PipeType.ITEM,
-                    new ItemData(
+                    new ItemPipeData(
                             64,
-                            1
+                            1,
+                            100
                     )
             );
 }

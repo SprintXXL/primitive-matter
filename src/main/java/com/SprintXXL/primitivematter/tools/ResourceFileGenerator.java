@@ -2,7 +2,7 @@ package com.SprintXXL.primitivematter.tools;
 
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.types.DeviceCategory;
+import com.SprintXXL.primitivematter.library.devices.DeviceCategory;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import com.SprintXXL.primitivematter.library.substances.shared.FormEntry;
@@ -58,9 +58,7 @@ public class ResourceFileGenerator {
 
         for (Device device : DeviceRegistry.getAllDevices()) {
 
-            if (device.getCategory() == DeviceCategory.BUCKET) {
                 generateDeviceModel(device);
-            }
         }
 
         generateLang();

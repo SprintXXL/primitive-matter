@@ -1,6 +1,6 @@
 package com.SprintXXL.primitivematter;
 
-import com.SprintXXL.primitivematter.content.devices.pipe.TileEntityPipe;
+import com.SprintXXL.primitivematter.content.devices.transport.pipe.base.TileEntityPipe;
 import com.SprintXXL.primitivematter.content.registry.ForgeRegistry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
