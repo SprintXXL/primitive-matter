@@ -6,7 +6,7 @@ import com.SprintXXL.primitivematter.content.devices.transport.pipe.network.Pipe
 import com.SprintXXL.primitivematter.content.devices.transport.pipe.network.PipeNetworkTickHandler;
 import com.SprintXXL.primitivematter.content.devices.transport.pipe.util.PipeSideMode;
 import com.SprintXXL.primitivematter.content.devices.transport.pipe.raytrace.PipeHitResult;
-import com.SprintXXL.primitivematter.library.devices.transport.pipe.PipeDevice;
+import com.SprintXXL.primitivematter.library.devices.category.transport.pipe.PipeDevice;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,10 +14,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -29,13 +27,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
 
 import javax.annotation.Nullable;
 
 import static com.SprintXXL.primitivematter.PrimitiveMatter.printInfo;
 import static com.SprintXXL.primitivematter.Reference.MODID;
-import static com.SprintXXL.primitivematter.content.devices.transport.pipe.debug.DebugPipeNetwork.testPathFinding;
 import static com.SprintXXL.primitivematter.content.devices.transport.pipe.raytrace.PipeAABB.*;
 import static com.SprintXXL.primitivematter.content.devices.transport.pipe.util.PipeSideMode.*;
 import static com.SprintXXL.primitivematter.content.devices.transport.pipe.util.PipeUtil.*;

@@ -1,8 +1,8 @@
-package com.SprintXXL.primitivematter.library.devices.transport.pipe;
+package com.SprintXXL.primitivematter.library.devices.category.transport.pipe;
 
 import com.SprintXXL.primitivematter.library.devices.Device;
-import com.SprintXXL.primitivematter.library.devices.DeviceCategory;
-import com.SprintXXL.primitivematter.library.devices.transport.pipe.data.PipeData;
+import com.SprintXXL.primitivematter.library.devices.category.DeviceCategory;
+import com.SprintXXL.primitivematter.library.devices.category.transport.pipe.data.PipeData;
 
 public class PipeDevice extends Device {
 

@@ -6,7 +6,7 @@ import com.SprintXXL.primitivematter.content.substances.global.FluidBlockBase;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.nbt.BucketNBT;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.transport.bucket.BucketDevice;
+import com.SprintXXL.primitivematter.library.devices.category.transport.bucket.BucketDevice;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 import com.SprintXXL.primitivematter.library.substances.registry.SubstanceRegistry;
 import net.minecraft.block.Block;

@@ -11,6 +11,11 @@ public final class DeviceIDs {
     public static final String IRON_BUCKET = "iron_bucket";
     public static final String STEEL_BUCKET = "steel_bucket";
 
+    // -------------- \\
+    // MODULE DEVICES \\
+    // -------------- \\
+    public static final String PRIMITIVE_CONVEYOR = "primitive_conveyor";
+
     // ------------ \\
     // PIPE DEVICES \\
     // ------------ \\

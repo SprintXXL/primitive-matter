@@ -1,7 +1,7 @@
-package com.SprintXXL.primitivematter.library.devices.transport.bucket;
+package com.SprintXXL.primitivematter.library.devices.category.transport.bucket;
 
 import com.SprintXXL.primitivematter.library.devices.Device;
-import com.SprintXXL.primitivematter.library.devices.DeviceCategory;
+import com.SprintXXL.primitivematter.library.devices.category.DeviceCategory;
 import com.SprintXXL.primitivematter.library.substances.Substance;
 
 public class BucketDevice extends Device {

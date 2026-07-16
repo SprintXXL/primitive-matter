@@ -1,4 +1,4 @@
-package com.SprintXXL.primitivematter.library.devices.transport.pipe.data;
+package com.SprintXXL.primitivematter.library.devices.category.transport.pipe.data;
 
 public class ItemPipeData implements PipeData {
 

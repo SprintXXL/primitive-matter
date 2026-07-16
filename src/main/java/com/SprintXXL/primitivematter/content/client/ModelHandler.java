@@ -5,7 +5,7 @@ import com.SprintXXL.primitivematter.content.substances.global.FluidBlockBase;
 import com.SprintXXL.primitivematter.content.devices.transport.bucket.client.ModelBucket;
 import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry;
-import com.SprintXXL.primitivematter.library.devices.transport.bucket.BucketDevice;
+import com.SprintXXL.primitivematter.library.devices.category.transport.bucket.BucketDevice;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
