@@ -1,5 +1,6 @@
 package com.SprintXXL.primitivematter.library.devices.definitions;
 
+import com.SprintXXL.primitivematter.library.devices.Device;
 import com.SprintXXL.primitivematter.library.devices.category.transport.bucket.BucketDevice;
 import com.SprintXXL.primitivematter.library.devices.category.transport.module.ModuleDevice;
 import com.SprintXXL.primitivematter.library.devices.category.transport.module.data.ItemData;
@@ -7,14 +8,13 @@ import com.SprintXXL.primitivematter.library.devices.category.transport.pipe.Pip
 import com.SprintXXL.primitivematter.library.devices.category.transport.pipe.PipeType;
 import com.SprintXXL.primitivematter.library.devices.category.transport.pipe.data.ItemPipeData;
 import com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances;
-
-import static com.SprintXXL.primitivematter.library.devices.registry.DeviceRegistry.register;
+import com.sprintxxl.ascenthub.definitions.DefinitionRegistrar;
 
 public final class ModDevices {
 
     private ModDevices() {}
 
-    public static void initModDevices() {
+    public static void initDeviceDefinitions(DefinitionRegistrar<Device> registrar) {
 
         // --------------- \\
         // STORAGE DEVICES \\
@@ -24,15 +24,15 @@ public final class ModDevices {
         // TRANSPORT DEVICES \\
         // ----------------- \\
         // BUCKET \\
-        register(CLAY_BUCKET);
-        register(IRON_BUCKET);
-        register(STEEL_BUCKET);
+        registrar.register(CLAY_BUCKET);
+        registrar.register(IRON_BUCKET);
+        registrar.register(STEEL_BUCKET);
 
         // MODULE \\
-        register(PRIMITIVE_CONVEYOR);
+        registrar.register(PRIMITIVE_CONVEYOR);
 
         // PIPE \\
-        register(BASIC_ITEM_PIPE);
+        registrar.register(BASIC_ITEM_PIPE);
 
     }
 

@@ -1,6 +1,6 @@
 package com.SprintXXL.primitivematter.library.substances.shared;
 
-public enum Category {
+public enum SubstanceCategory {
 
     METAL,
     MINERAL,

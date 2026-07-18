@@ -21,15 +21,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.SprintXXL.primitivematter.library.devices.definitions.ModDevices.initModDevices;
-import static com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances.initModSubstances;
+import static com.SprintXXL.primitivematter.library.devices.definitions.ModDevices.initDeviceDefinitions;
+import static com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances.initSubstanceDefinitions;
 
 public class ResourceFileGenerator {
 
     static void main() {
 
-        initModSubstances();
-        initModDevices();
+        initSubstanceDefinitions(SubstanceRegistry::register);
+        initDeviceDefinitions(DeviceRegistry::register);
 
         cleanGeneratedResources();
 

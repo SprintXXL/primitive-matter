@@ -1,26 +1,27 @@
 package com.SprintXXL.primitivematter.library.substances;
 
-import com.SprintXXL.primitivematter.library.substances.shared.Category;
+import com.SprintXXL.primitivematter.library.substances.shared.SubstanceCategory;
 import com.SprintXXL.primitivematter.library.substances.states.SubstanceState;
 import com.SprintXXL.primitivematter.library.substances.states.gas.GasState;
 import com.SprintXXL.primitivematter.library.substances.states.liquid.LiquidState;
 import com.SprintXXL.primitivematter.library.substances.states.plasma.PlasmaState;
 import com.SprintXXL.primitivematter.library.substances.states.solid.SolidState;
+import com.sprintxxl.ascenthub.definitions.AscentDefinition;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Substance {
+public class Substance implements AscentDefinition {
 
     private final String id;
     private final String color;
-    private final Category category;
+    private final SubstanceCategory category;
     private final List<SubstanceState> substanceStates;
 
     public Substance(
             String id,
             String color,
-            Category category,
+            SubstanceCategory category,
             SubstanceState... substanceStates
     ) {
         this.id = id;
@@ -29,6 +30,7 @@ public class Substance {
         this.substanceStates = Arrays.asList(substanceStates);
     }
 
+    @Override
     public String getID() {
         return id;
     }
@@ -37,7 +39,7 @@ public class Substance {
         return color;
     }
 
-    public Category getCategory() {
+    public SubstanceCategory getSubstanceCategory() {
         return category;
     }
 

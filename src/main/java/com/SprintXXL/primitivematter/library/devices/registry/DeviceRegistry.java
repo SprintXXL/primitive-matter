@@ -5,11 +5,13 @@ import net.minecraft.item.ItemStack;
 
 import java.util.*;
 
-import static com.SprintXXL.primitivematter.library.devices.definitions.ModDevices.initModDevices;
+import static com.SprintXXL.primitivematter.library.devices.definitions.ModDevices.initDeviceDefinitions;
 
 public final class DeviceRegistry {
 
     private DeviceRegistry() {}
+
+    private static boolean initialized = false;
 
     private static final List<Device> ALL_DEVICES = new ArrayList<>();
 
@@ -43,6 +45,12 @@ public final class DeviceRegistry {
 
     public static void initDeviceRegistry() {
 
-        initModDevices();
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
+
+        initDeviceDefinitions(DeviceRegistry::register);
     }
 }

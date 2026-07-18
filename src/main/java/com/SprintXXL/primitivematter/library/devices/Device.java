@@ -1,8 +1,9 @@
 package com.SprintXXL.primitivematter.library.devices;
 
 import com.SprintXXL.primitivematter.library.devices.category.DeviceCategory;
+import com.sprintxxl.ascenthub.definitions.AscentDefinition;
 
-public abstract class Device implements DeviceDefinition {
+public abstract class Device implements DeviceDefinition, AscentDefinition {
 
     private final String id;
     private final DeviceCategory category;
@@ -21,7 +22,12 @@ public abstract class Device implements DeviceDefinition {
     }
 
     @Override
-    public DeviceCategory getCategory() {
+    public String getCategory() {
+        return "device";
+    }
+
+    @Override
+    public DeviceCategory getDeviceCategory() {
         return category;
     }
 

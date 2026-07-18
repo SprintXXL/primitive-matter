@@ -13,6 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.SprintXXL.primitivematter.Reference.*;
+import static com.SprintXXL.primitivematter.ascent.MatterDefinitionProvider.initMatterDefinitionProvider;
+import static com.SprintXXL.primitivematter.ascent.MatterRecipes.initMatterRecipes;
 import static com.SprintXXL.primitivematter.content.registry.ContentRegistry.createContent;
 import static com.SprintXXL.primitivematter.content.registry.ContentRegistry.createCustomFluidBlocks;
 import static com.SprintXXL.primitivematter.content.registry.ForgeRegistry.registerCustomFluids;
@@ -32,6 +34,12 @@ public class PrimitiveMatter {
         registerCustomFluids();
         createCustomFluidBlocks();
         MinecraftForge.EVENT_BUS.register(new ForgeRegistry());
+
+        // ARRI \\
+        initMatterRecipes();
+
+        // HUB \\
+        initMatterDefinitionProvider();
     }
 
     @Mod.EventHandler

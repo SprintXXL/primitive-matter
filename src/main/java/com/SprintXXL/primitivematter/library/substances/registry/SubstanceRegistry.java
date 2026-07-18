@@ -13,11 +13,13 @@ import net.minecraft.util.ResourceLocation;
 import java.util.*;
 
 import static com.SprintXXL.primitivematter.Reference.MODID;
-import static com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances.initModSubstances;
+import static com.SprintXXL.primitivematter.library.substances.definitions.ModSubstances.initSubstanceDefinitions;
 
 public final class SubstanceRegistry {
 
     private SubstanceRegistry() {}
+
+    private static boolean initialized = false;
 
     private static final List<Substance> ALL_SUBSTANCES = new ArrayList<>();
     private static final Map<String, Substance> SUBSTANCES = new HashMap<>();
@@ -103,6 +105,12 @@ public final class SubstanceRegistry {
 
     public static void initSubstanceRegistry() {
 
-        initModSubstances();
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
+
+        initSubstanceDefinitions(SubstanceRegistry::register);
     }
 }
